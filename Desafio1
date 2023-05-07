@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class Desafio {
+    public static void main(String[] args){
+        Scanner leitura = new Scanner(System.in);
+        String nomeUsuario;
+        double saldo = 2500;
+        String senha = "casa";
+        boolean entrar = false;
+        int operacao = 0;
+
+        System.out.println("Qual usuário você deseja acessar?");
+        String inputUsuario = leitura.nextLine();
+
+        if (inputUsuario.equals("Lucas Franzoni Pires")){
+            //Inicia checagem de conta
+            System.out.println("Usuário localizado no banco de dados. Por favor insira a senha para continuar: ");
+            String inputSenha = leitura.nextLine();
+
+            int tentativas = 0;
+            while (tentativas < 4) {
+                if (inputSenha.equals(senha)) {
+                    entrar =true;
+                    break;
+                } else {
+                    System.out.println("Senha incorreta, tente novamente");
+                    inputSenha = leitura.nextLine();
+                }
+                tentativas++;
+            }
+
+        } else {
+            System.out.println("Não há nenhum usuário registrado com esse nome");
+        }
+
+        if(entrar){
+            System.out.println("Login efetuado com sucesso!");
+
+            String mensagem1 = """
+                Usuário(a): %s
+                Tipo da conta: corrente
+                Saldo incial: %.2f
+                ***********************
+                """.formatted(inputUsuario, saldo);
+
+            System.out.println(mensagem1);
+
+            while(operacao != 4) {
+                String mensagem2 = """
+                        --Operações:
+                        1. Ver saldo;
+                        2. Depositar saldo;
+                        3. Tranferir saldo;
+                        4. Sair;
+                            """;
+                System.out.println(mensagem2);
+                operacao = leitura.nextInt();
+
+                switch (operacao) {
+                    case 1:
+                        String mensagem3 = """
+                                Seu saldo é de: %.2f
+                                
+                                """.formatted(saldo);
+                        System.out.println(mensagem3);
+                        break;
+
+                    case 2:
+                        System.out.println("Quanto deseja depositar? ");
+                        double deposito = leitura.nextDouble();
+                        saldo += deposito;
+                        System.out.println("Seu novo saldo é de: " + saldo);
+                        break;
+
+                    case 3:
+                        System.out.println("Quanto deseja tranferir? ");
+                        double tranferencia = leitura.nextDouble();
+                        saldo -= tranferencia;
+                        System.out.println("Seu novo saldo é de: " + saldo);
+                        break;
+
+                    case 4:
+                        break;
+
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
+                }
+            }
+
+        } else {
+            System.out.println("Muitas tentativas de login foram feitas, tente novamente mais tarde.");
+        }
+    }
+}
